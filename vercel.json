@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "app/static/**", "use": "@vercel/static" },
+    { "src": "api/**/*.py", "use": "@vercel/python" }
+  ],
+  "routes": [
+    { "src": "/api/claude", "dest": "/api/claude.py" },
+    { "src": "/agents/([^/]+\\.md)", "dest": "/agents/$1" },
+    { "src": "/presentation/(.*)", "dest": "/presentation/$1" },
+    { "src": "/(.*)", "dest": "/app/static/$1" }
+  ]
+}

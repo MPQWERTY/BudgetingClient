@@ -1,0 +1,70 @@
+{
+  "personas": [
+    {
+      "id": "studente",
+      "nome": "Marco",
+      "eta": 22,
+      "tagline": "Universitario a Torino, borsa di studio e libreria part-time",
+      "avatar": "🎓",
+      "gradient": "linear-gradient(135deg, #A100FF, #BE82FF)",
+      "palette": "violet",
+      "painPoint": "difficoltà a chiudere il mese",
+      "file": "studente.csv"
+    },
+    {
+      "id": "freelance",
+      "nome": "Sara",
+      "eta": 34,
+      "tagline": "Freelance UX designer, entrate irregolari da progetti",
+      "avatar": "💻",
+      "gradient": "linear-gradient(135deg, #F472B6, #EC4899)",
+      "palette": "rose",
+      "painPoint": "entrate imprevedibili e tasse",
+      "file": "freelance.csv"
+    },
+    {
+      "id": "coppia",
+      "nome": "Anna & Luca",
+      "eta": "30-32",
+      "tagline": "Coppia in mutuo, doppio reddito, primi investimenti",
+      "avatar": "💑",
+      "gradient": "linear-gradient(135deg, #34D399, #10B981)",
+      "palette": "mint",
+      "painPoint": "bilanciare mutuo e risparmio",
+      "file": "coppia.csv"
+    },
+    {
+      "id": "pensionato",
+      "nome": "Giovanni",
+      "eta": 68,
+      "tagline": "Pensionato, spese fisse tra farmacia e utenze",
+      "avatar": "👴",
+      "gradient": "linear-gradient(135deg, #F59E0B, #EAB308)",
+      "palette": "amber",
+      "painPoint": "spese sanitarie in aumento",
+      "file": "pensionato.csv"
+    },
+    {
+      "id": "millennial",
+      "nome": "Chiara",
+      "eta": 29,
+      "tagline": "Single a Milano, molti abbonamenti e delivery, zero risparmio",
+      "avatar": "✨",
+      "gradient": "linear-gradient(135deg, #BE82FF, #E9DBFF)",
+      "palette": "lavender",
+      "painPoint": "lifestyle inflation e nessun risparmio",
+      "file": "millennial.csv"
+    },
+    {
+      "id": "famiglia",
+      "nome": "Roberto",
+      "eta": 42,
+      "tagline": "Sposato con 2 figli, mutuo villetta e spese scolastiche",
+      "avatar": "👨‍👩‍👧‍👦",
+      "gradient": "linear-gradient(135deg, #A100FF, #F472B6)",
+      "palette": "violet-rose",
+      "painPoint": "spese familiari elevate e prevedibili",
+      "file": "famiglia.csv"
+    }
+  ]
+}

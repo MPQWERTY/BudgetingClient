@@ -1,7 +1,12 @@
 // Wrapper unico per chiamare Claude via il proxy /api/claude.
 // Retry con backoff, timeout, token accounting, mock mode via ?mock=1.
 
-const MOCK = new URLSearchParams(location.search).get("mock") === "1";
+// Mock forzato: (a) query ?mock=1, (b) hosting statico senza backend (GitHub Pages, ecc)
+const _explicitMock = new URLSearchParams(location.search).get("mock") === "1";
+const _noBackend = !["localhost", "127.0.0.1", "0.0.0.0"].includes(location.hostname)
+  && !location.hostname.endsWith(".vercel.app")
+  && !location.hostname.endsWith(".vercel.dev");
+const MOCK = _explicitMock || _noBackend;
 export const isMock = () => MOCK;
 const MODELS = {
   fast: "claude-haiku-4-5-20251001",
@@ -15,7 +20,9 @@ export const tokenStats = () => ({ ..._tokenTotals });
 const _sysCache = new Map();
 export async function loadSystemPrompt(agentFile) {
   if (_sysCache.has(agentFile)) return _sysCache.get(agentFile);
-  const r = await fetch(`/agents/${agentFile}`);
+  // Path relativo alla pagina — funziona sia su localhost:8000/, che su gh-pages sotto /BudgetingClient/, che su Vercel.
+  const base = location.pathname.replace(/\/[^\/]*$/, "/");
+  const r = await fetch(`${base}agents/${agentFile}`);
   if (!r.ok) throw new Error(`system prompt load fail: ${agentFile}`);
   const txt = await r.text();
   _sysCache.set(agentFile, txt);

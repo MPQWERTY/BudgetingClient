@@ -990,10 +990,10 @@ export function openPage(name) {
   }
 }
 
-// Boot: mount avatar dropdown + apply persisted settings
+// Boot: solo applySettings (il menu è ora statico nell'HTML)
 function boot() {
-  applySettings();
-  mountAvatarDropdown();
+  try { applySettings(); } catch (e) { console.warn("applySettings failed:", e); }
+  // mountAvatarDropdown DISABILITATO — il menu è statico in index.html
 }
 
 if (document.readyState === "loading") {
