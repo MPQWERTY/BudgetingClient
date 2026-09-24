@@ -2,9 +2,10 @@
 // Retry con backoff, timeout, token accounting, mock mode via ?mock=1.
 
 const MOCK = new URLSearchParams(location.search).get("mock") === "1";
+export const isMock = () => MOCK;
 const MODELS = {
   fast: "claude-haiku-4-5-20251001",
-  smart: "claude-sonnet-5",
+  smart: "claude-sonnet-4-5-20250929",
 };
 
 const _tokenTotals = { input: 0, output: 0, calls: 0 };
@@ -51,10 +52,13 @@ export function extractJson(text) {
  * @returns {Promise<{text:string, json:any, raw:any}>}
  */
 export async function callAgent({
-  agent, systemPrompt, userMessage,
+  agent, systemPrompt, userMessage, messages,
   tier = "fast", maxTokens = 2048, timeoutMs = 30000,
   retries = 2, mockResponse = null,
 }) {
+  const payloadMessages = Array.isArray(messages) && messages.length
+    ? messages
+    : [{ role: "user", content: userMessage }];
   if (MOCK && mockResponse != null) {
     await _sleep(300 + Math.random() * 500);
     const text = typeof mockResponse === "string" ? mockResponse : JSON.stringify(mockResponse);
@@ -72,7 +76,7 @@ export async function callAgent({
         body: JSON.stringify({
           model, max_tokens: maxTokens,
           system: systemPrompt,
-          messages: [{ role: "user", content: userMessage }],
+          messages: payloadMessages,
         }),
         signal: ctl.signal,
       });

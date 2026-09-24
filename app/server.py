@@ -32,6 +32,16 @@ DEFAULT_TIMEOUT = 60
 
 
 class Handler(SimpleHTTPRequestHandler):
+    extensions_map = {
+        **SimpleHTTPRequestHandler.extensions_map,
+        ".js": "text/javascript; charset=utf-8",
+        ".mjs": "text/javascript; charset=utf-8",
+        ".css": "text/css; charset=utf-8",
+        ".html": "text/html; charset=utf-8",
+        ".json": "application/json; charset=utf-8",
+        ".svg": "image/svg+xml",
+    }
+
     def __init__(self, *a, **kw):
         super().__init__(*a, directory=str(STATIC), **kw)
 
@@ -47,9 +57,11 @@ class Handler(SimpleHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self):
-        # Espone anche /agents/*.md per il frontend (system prompt = file di istruzioni)
-        if self.path.startswith("/agents/"):
-            rel = self.path.lstrip("/")
+        # Espone /agents/*.md dal repo (system prompt = file istruzioni).
+        # Gli .js sotto /agents/ restano serviti dalla static folder.
+        path_no_qs = self.path.split("?", 1)[0]
+        if path_no_qs.startswith("/agents/") and path_no_qs.endswith(".md"):
+            rel = path_no_qs.lstrip("/")
             target = ROOT.parent / rel
             if target.is_file():
                 self.send_response(200)
@@ -97,9 +109,13 @@ class Handler(SimpleHTTPRequestHandler):
                 json=body,
                 timeout=DEFAULT_TIMEOUT,
             )
-            self._json(r.status_code, r.json())
+            try:
+                data = r.json()
+            except (json.JSONDecodeError, ValueError):
+                data = {"error": {"message": r.text[:500] or f"HTTP {r.status_code}"}}
+            self._json(r.status_code, data)
         except requests.RequestException as e:
-            self._json(502, {"error": f"upstream: {e}"})
+            self._json(502, {"error": {"message": f"upstream: {e}"}})
 
 
 def main():

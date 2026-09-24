@@ -1,4 +1,4 @@
-import { callAgent, loadSystemPrompt } from "../lib/claude.js";
+import { callAgent, loadSystemPrompt, isMock } from "../lib/claude.js";
 import { CATEGORY_KEYWORDS, getLang } from "../lib/i18n.js";
 
 const MOCK = {
@@ -13,14 +13,18 @@ const MOCK = {
 // Fallback deterministico: se abbiamo già rows dal CSV/XLSX, li normalizza senza LLM.
 function deterministicFromRows(rows) {
   if (!Array.isArray(rows) || rows.length < 2) return null;
-  // trova header (prima riga con colonne testuali)
-  const header = rows[0].map(x => String(x).toLowerCase());
-  const idxDate = header.findIndex(h => /data|date/.test(h));
-  const idxDesc = header.findIndex(h => /descr|desc|causale|payee|merchant/.test(h));
-  const idxAmt = header.findIndex(h => /import|amount|valore|value/.test(h));
-  if (idxDate < 0 || idxAmt < 0) return null;
+  // cerca header nelle prime 5 righe (banche mettono spesso preamboli)
+  let headerRow = -1, header = null, idxDate = -1, idxDesc = -1, idxAmt = -1;
+  for (let h = 0; h < Math.min(5, rows.length); h++) {
+    const cand = rows[h].map(x => String(x).toLowerCase());
+    const d = cand.findIndex(x => /data|date/.test(x));
+    const de = cand.findIndex(x => /descr|desc|causale|payee|merchant|note/.test(x));
+    const a = cand.findIndex(x => /import|amount|valore|value/.test(x));
+    if (d >= 0 && a >= 0) { headerRow = h; header = cand; idxDate = d; idxDesc = de; idxAmt = a; break; }
+  }
+  if (headerRow < 0) return null;
   const txs = [];
-  for (let i = 1; i < rows.length; i++) {
+  for (let i = headerRow + 1; i < rows.length; i++) {
     const r = rows[i]; if (!r || !r[idxDate]) continue;
     const dateRaw = String(r[idxDate]);
     const iso = normDate(dateRaw);
@@ -55,6 +59,12 @@ function normDate(s) {
 }
 
 export async function runParser({ fileMeta, fileData }) {
+  // Mock mode: usa il deterministico sui dati veri caricati dall'utente
+  if (isMock()) {
+    await new Promise(r => setTimeout(r, 400 + Math.random() * 400));
+    const fb = deterministicFromRows(fileData.rows);
+    if (fb) return fb;
+  }
   const system = await loadSystemPrompt("PARSER_AGENT.md");
   const user = [
     `File: ${fileMeta.name} (${fileMeta.type}, ${fileMeta.size_bytes} bytes)`,

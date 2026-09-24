@@ -1,4 +1,4 @@
-import { callAgent, loadSystemPrompt } from "../lib/claude.js";
+import { callAgent, loadSystemPrompt, isMock } from "../lib/claude.js";
 import { CATEGORY_KEYWORDS, getLang } from "../lib/i18n.js";
 
 const MOCK = {
@@ -18,11 +18,17 @@ const MOCK = {
 
 // Fallback deterministico: categorizza via keyword.
 function deterministicAnalyze(transactions, lang) {
-  const kw = CATEGORY_KEYWORDS[lang] || CATEGORY_KEYWORDS.it;
+  // unisci IT + EN: le descrizioni bancarie sono in italiano anche se UI in inglese
+  const kwIT = CATEGORY_KEYWORDS.it || {};
+  const kwEN = CATEGORY_KEYWORDS.en || {};
+  const merged = {};
+  for (const cat of new Set([...Object.keys(kwIT), ...Object.keys(kwEN)])) {
+    merged[cat] = [...(kwIT[cat] || []), ...(kwEN[cat] || [])];
+  }
   const cats = {};
   const catOf = (desc) => {
     const d = desc.toLowerCase();
-    for (const [c, words] of Object.entries(kw)) if (words.some(w => d.includes(w))) return c;
+    for (const [c, words] of Object.entries(merged)) if (words.some(w => d.includes(w))) return c;
     return "other";
   };
   let income = 0, expenses = 0;
@@ -38,23 +44,69 @@ function deterministicAnalyze(transactions, lang) {
   }
   const essentialKeys = ["housing", "food", "utilities", "transport"];
   const essential = essentialKeys.reduce((s, k) => s + Math.abs(cats[k]?.total || 0), 0);
+  const essential_pct = income ? Math.round(100 * essential / income) : 0;
+  const savings_pct = income ? Math.round(100 * (cats.savings?.total || 0) / income) : 0;
+  const net = income + expenses;
+  const discretionary_pct = income ? Math.round(100 * Math.abs(cats.entertainment?.total || 0) / income) : 0;
+
+  // top categorie non-income ordinate per spesa
+  const topExpense = Object.entries(cats)
+    .filter(([k]) => k !== "income")
+    .sort((a, b) => a[1].total - b[1].total)[0];
+  const catLabel = (k) => {
+    const it = { housing: "casa", food: "cibo e spesa", utilities: "bollette e utenze", transport: "trasporti", entertainment: "intrattenimento", shopping: "shopping", health: "salute", savings: "risparmi", other: "altre spese" };
+    const en = { housing: "housing", food: "food & groceries", utilities: "bills & utilities", transport: "transport", entertainment: "entertainment", shopping: "shopping", health: "health", savings: "savings", other: "other" };
+    return lang === "en" ? (en[k] || k) : (it[k] || k);
+  };
+
+  const narrative = lang === "en"
+    ? [
+        income > 0 ? `This period you received €${income.toFixed(0)} in income.` : `No income transactions in this period.`,
+        topExpense ? `Your biggest expense category is ${catLabel(topExpense[0])} at €${Math.abs(topExpense[1].total).toFixed(0)} (${topExpense[1].pct_of_expenses}% of outflows).` : "",
+        essential_pct > 0 ? `Essentials (housing, food, utilities, transport) absorb ${essential_pct}% of your income.` : "",
+        savings_pct === 0 && income > 0 ? `No transfers to savings detected — a small automatic deposit could change your trajectory.` : (savings_pct > 0 ? `You saved ${savings_pct}% of your income this period. Nice.` : ""),
+        net > 0 ? `Net balance: +€${net.toFixed(0)} — a positive month.` : (net < 0 ? `Net balance: -€${Math.abs(net).toFixed(0)} — expenses exceeded income.` : ""),
+      ].filter(Boolean).join(" ")
+    : [
+        income > 0 ? `In questo periodo hai ricevuto €${income.toFixed(0)} di entrate.` : `Nessuna entrata rilevata nel periodo.`,
+        topExpense ? `La tua categoria di spesa principale è ${catLabel(topExpense[0])} con €${Math.abs(topExpense[1].total).toFixed(0)} (${topExpense[1].pct_of_expenses}% delle uscite).` : "",
+        essential_pct > 0 ? `Le spese essenziali (casa, cibo, bollette, trasporti) assorbono il ${essential_pct}% del tuo reddito.` : "",
+        savings_pct === 0 && income > 0 ? `Nessun bonifico verso risparmi rilevato — un piccolo accantonamento automatico può cambiare la tua traiettoria.` : (savings_pct > 0 ? `Hai risparmiato il ${savings_pct}% del reddito. Bene.` : ""),
+        net > 0 ? `Bilancio netto: +€${net.toFixed(0)} — mese in positivo.` : (net < 0 ? `Bilancio netto: -€${Math.abs(net).toFixed(0)} — spese sopra le entrate.` : ""),
+      ].filter(Boolean).join(" ");
+
+  // Anomalies: categoria dove hai speso molto più della media
+  const anomalies = [];
+  const nonIncome = Object.entries(cats).filter(([k]) => k !== "income");
+  if (nonIncome.length > 2) {
+    const totals = nonIncome.map(([, v]) => Math.abs(v.total));
+    const avg = totals.reduce((a, b) => a + b, 0) / totals.length;
+    for (const [k, v] of nonIncome) {
+      if (Math.abs(v.total) > avg * 2 && k !== "housing") {
+        anomalies.push({
+          description: lang === "en"
+            ? `${catLabel(k)} spending is notably above your other categories (€${Math.abs(v.total).toFixed(0)}).`
+            : `La spesa in ${catLabel(k)} è nettamente sopra le altre categorie (€${Math.abs(v.total).toFixed(0)}).`,
+          severity: "medium",
+        });
+      }
+    }
+  }
+
   return {
     categories: cats,
-    totals: {
-      income, expenses, net: income + expenses,
-      essential_pct: income ? Math.round(100 * essential / income) : 0,
-      discretionary_pct: income ? Math.round(100 * Math.abs(cats.entertainment?.total || 0) / income) : 0,
-      savings_pct: income ? Math.round(100 * (cats.savings?.total || 0) / income) : 0,
-    },
-    narrative: lang === "en"
-      ? `Deterministic breakdown of ${transactions.length} transactions across ${Object.keys(cats).length} categories.`
-      : `Analisi euristica di ${transactions.length} transazioni in ${Object.keys(cats).length} categorie.`,
-    anomalies: [],
+    totals: { income, expenses, net, essential_pct, discretionary_pct, savings_pct },
+    narrative,
+    anomalies,
   };
 }
 
 export async function runAnalyzer({ transactions }) {
   const lang = getLang();
+  if (isMock()) {
+    await new Promise(r => setTimeout(r, 500 + Math.random() * 500));
+    return deterministicAnalyze(transactions, lang);
+  }
   const system = await loadSystemPrompt("ANALYZER_AGENT.md");
   const user = [
     `Lingua utente: ${lang}. Rispondi nella lingua utente.`,

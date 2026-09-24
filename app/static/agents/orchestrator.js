@@ -39,19 +39,18 @@ export async function runOrchestrator({ fileMeta, fileData, onStep = () => {} })
   result.analysis = await runAnalyzer({ transactions: result.parse.transactions });
   onStep("analyzer", "done", result.analysis);
 
-  // 3. Simulator + Advisor in parallelo
+  // 3. Simulator prima (Advisor lo consuma), poi Advisor
   onStep("simulator", "running");
-  onStep("advisor", "running");
   const history = loadHistory();
-  const [sim, adv] = await Promise.all([
-    runSimulator({ categories: result.analysis.categories, totals: result.analysis.totals })
-      .then(x => { onStep("simulator", "done", x); return x; })
-      .catch(e => { onStep("simulator", "failed", { error: String(e) }); return { scenarios: [], disclaimer: "" }; }),
-    runAdvisor({ analysis: result.analysis, simulation: {}, history })
-      .then(x => { onStep("advisor", "done", x); return x; })
-      .catch(e => { onStep("advisor", "failed", { error: String(e) }); return null; }),
-  ]);
+  const sim = await runSimulator({ categories: result.analysis.categories, totals: result.analysis.totals })
+    .then(x => { onStep("simulator", "done", x); return x; })
+    .catch(e => { onStep("simulator", "failed", { error: String(e) }); return { scenarios: [], disclaimer: "" }; });
   result.simulation = sim;
+
+  onStep("advisor", "running");
+  const adv = await runAdvisor({ analysis: result.analysis, simulation: sim, history })
+    .then(x => { onStep("advisor", "done", x); return x; })
+    .catch(e => { onStep("advisor", "failed", { error: String(e) }); return null; });
   result.advice = adv;
 
   // 4. Persistenza

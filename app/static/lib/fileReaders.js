@@ -35,7 +35,10 @@ export async function readFile(file) {
 async function readCsv(file) {
   await loadScript(cdn.papa);
   const text = await file.text();
-  const parsed = window.Papa.parse(text, { header: false, skipEmptyLines: true });
+  const parsed = window.Papa.parse(text, {
+    header: false, skipEmptyLines: true,
+    delimitersToGuess: [";", ",", "\t", "|"],
+  });
   const rows = parsed.data.slice(0, 200);
   return { kind: "csv", raw: text, preview: rows.slice(0, 30).map(r => r.join(" | ")).join("\n"), rows };
 }

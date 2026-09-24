@@ -6,97 +6,304 @@
   <title>Budget Storyteller</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="pages.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-mark">&gt;</div>
-      <div>
-        <div class="brand-title" data-i18n="app_title">Budget Storyteller</div>
-        <div class="brand-sub" data-i18n="tagline">Capisci i tuoi soldi. In parole semplici.</div>
-      </div>
-    </div>
-    <div class="topbar-actions">
-      <select id="langSelect" title="lingua">
+  <div class="ambient-blobs" aria-hidden="true"></div>
+
+  <!-- Top nav -->
+  <nav class="nav">
+    <button class="nav-brand" id="navBrand" type="button" aria-label="Home">
+      <span class="nav-mark">B</span>
+      <span>Budget Storyteller</span>
+    </button>
+    <div class="nav-actions">
+      <select id="langSelect" class="lang-select" title="lingua">
         <option value="it">IT</option>
         <option value="en">EN</option>
       </select>
-      <button id="btnReload" class="ghost" data-i18n="reload">Ricomincia</button>
-    </div>
-  </header>
-
-  <main>
-    <!-- 1. Upload -->
-    <section id="secUpload" class="card">
-      <div class="dropzone" id="dropzone">
-        <input type="file" id="fileInput" accept=".csv,.tsv,.pdf,.xlsx,.xls" hidden />
-        <div class="drop-inner">
-          <div class="drop-icon">↑</div>
-          <div class="drop-text" data-i18n="upload_hint">Trascina qui il tuo estratto conto (CSV, PDF, XLSX) o clicca per selezionare</div>
-          <button id="btnSample" class="link" data-i18n="try_sample">Prova con il file di esempio</button>
+      <button class="icon-btn" id="btnHelp" title="?" aria-label="help">?</button>
+      <!-- Menu utente statico (onclick inline = zero dipendenze da moduli) -->
+      <div class="avatar-wrap" id="userMenuWrap">
+        <button type="button" class="avatar-btn" id="avatarBtn"
+          onclick="event.stopPropagation(); document.getElementById('avatarMenu').classList.toggle('open'); return false;">GD</button>
+        <div class="avatar-menu" id="avatarMenu" role="menu">
+          <div class="avatar-menu-header">
+            <div class="avatar-menu-name">Guest Demo</div>
+            <div class="avatar-menu-email">guest@budgetstoryteller.local</div>
+          </div>
+          <ul>
+            <li><button type="button" onclick="document.getElementById('avatarMenu').classList.remove('open'); (window.openPage||window.openProfileModal||(()=>alert('Profilo non disponibile')))('profile'); return false;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+              <span>My profile</span>
+            </button></li>
+            <li><button type="button" onclick="document.getElementById('avatarMenu').classList.remove('open'); (window.openPage||window.openSettingsModal||(()=>alert('Impostazioni non disponibili')))('settings'); return false;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              <span>Settings</span>
+            </button></li>
+            <li><button type="button" onclick="document.getElementById('avatarMenu').classList.remove('open'); if(window.openPage){window.openPage('history');}else{document.querySelector('.history-card')?.scrollIntoView({behavior:'smooth'});} return false;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>
+              <span>Analysis history</span>
+            </button></li>
+            <li><button type="button" onclick="document.getElementById('avatarMenu').classList.remove('open'); (window.openPage||window.openPrivacyModal||(()=>alert('Privacy non disponibile')))('privacy'); return false;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/></svg>
+              <span>Privacy &amp; data</span>
+            </button></li>
+          </ul>
+          <div class="avatar-menu-sep"></div>
+          <ul>
+            <li><button type="button" class="danger" onclick="document.getElementById('avatarMenu').classList.remove('open'); if(window.openPage){window.openPage('logout');}else{if(confirm('Cancellare tutti i dati locali?')){localStorage.clear(); location.reload();}} return false;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span>Sign out</span>
+            </button></li>
+          </ul>
         </div>
       </div>
-      <div id="hitlBanner" class="banner hidden">
-        <span data-i18n="hitl_banner">La qualità del parsing è bassa. Verifica il file e conferma per procedere.</span>
-        <button id="btnConfirmHitl" data-i18n="confirm">Conferma</button>
-      </div>
+      <script>
+        document.addEventListener('click', function(e){
+          var m = document.getElementById('avatarMenu');
+          var w = document.getElementById('userMenuWrap');
+          if (m && w && !w.contains(e.target)) m.classList.remove('open');
+        });
+      </script>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <h1>
+        <span data-i18n="hero_h1_a">Capisci i tuoi soldi.</span><br />
+        <span class="accent" data-i18n="hero_h1_b">Come mai prima.</span>
+      </h1>
+      <p class="tagline" data-i18n="hero_tagline">Chiedi qualsiasi cosa sulle tue finanze. Carica un estratto conto per un'analisi personalizzata.</p>
     </section>
 
-    <!-- 2. Live agents -->
-    <section id="secAgents" class="card hidden">
-      <h2 data-i18n="agents_working">Gli agenti stanno lavorando</h2>
-      <div class="agents-grid">
-        <div class="agent" data-agent="parser"><span class="dot"></span><span class="name" data-i18n="parser">Parser</span><span class="state">—</span></div>
-        <div class="agent" data-agent="analyzer"><span class="dot"></span><span class="name" data-i18n="analyzer">Analista</span><span class="state">—</span></div>
-        <div class="agent" data-agent="simulator"><span class="dot"></span><span class="name" data-i18n="simulator">Simulatore</span><span class="state">—</span></div>
-        <div class="agent" data-agent="advisor"><span class="dot"></span><span class="name" data-i18n="advisor">Consulente educativo</span><span class="state">—</span></div>
-      </div>
-    </section>
-
-    <!-- 3. Dashboard -->
-    <section id="secDashboard" class="grid hidden">
-      <div class="card score-card">
-        <h3 data-i18n="score_title">Punteggio di salute finanziaria</h3>
-        <div class="score-value" id="scoreValue">—</div>
-        <div class="score-interp" id="scoreInterp"></div>
-        <div class="breakdown" id="scoreBreakdown"></div>
-      </div>
-      <div class="card">
-        <h3 data-i18n="categories_title">Dove vanno i tuoi soldi</h3>
-        <div class="pie-wrap"><canvas id="pieCanvas" width="220" height="220"></canvas></div>
-        <div class="legend" id="pieLegend"></div>
-      </div>
-      <div class="card story-card">
-        <h3 data-i18n="story_title">La tua storia</h3>
-        <p id="storyText"></p>
-      </div>
-      <div class="card">
-        <h3 data-i18n="scenarios_title">Cosa succederebbe se…</h3>
-        <div id="scenariosList"></div>
-      </div>
-      <div class="card lessons-card">
-        <h3 data-i18n="lessons_title">Micro-lezioni per te</h3>
-        <div id="lessonsList"></div>
-      </div>
-      <div class="card chat-card">
-        <h3 data-i18n="chat_title">Chiedi qualsiasi cosa</h3>
-        <div id="chatLog" class="chat-log"></div>
-        <form id="chatForm" class="chat-input">
-          <input id="chatInput" type="text" placeholder="Es. Cosa significa TAEG?" data-i18n-attr="placeholder,chat_placeholder" />
-          <button type="submit" data-i18n="ask">Chiedi</button>
+    <!-- Chat hero (primary interactive) -->
+    <section class="chat-hero">
+      <div class="chat-hero-box">
+        <div class="chat-hero-log" id="chatHeroLog"></div>
+        <form class="chat-hero-form" id="chatHeroForm">
+          <input
+            id="chatHeroInput"
+            class="chat-hero-input"
+            type="text"
+            autocomplete="off"
+            data-i18n-attr="placeholder,chat_hero_placeholder"
+            placeholder="Chiedi al tuo consulente educativo…"
+          />
+          <button type="submit" class="chat-send" id="chatSendBtn" aria-label="send">➤</button>
         </form>
       </div>
-      <div class="card history-card">
-        <h3 data-i18n="history_title">Storico analisi</h3>
-        <table id="historyTable"><thead><tr><th>Data</th><th>File</th><th>Score</th><th>Righe</th></tr></thead><tbody></tbody></table>
+
+      <div class="prompt-chips" id="promptChips">
+        <button class="chip" data-i18n="chip_save">Come posso risparmiare €100 al mese?</button>
+        <button class="chip" data-i18n="chip_analyze">Analizza il mio estratto conto</button>
+        <button class="chip" data-i18n="chip_fund">Cos'è un fondo di emergenza?</button>
+        <button class="chip" data-i18n="chip_mortgage">Perché le rate del mutuo cambiano?</button>
       </div>
     </section>
 
-    <footer class="disclaimer" data-i18n="disclaimer">Contenuto educativo. Non è consulenza finanziaria personalizzata.</footer>
+    <!-- Secondary CTA (upload) -->
+    <section class="secondary-cta">
+      <div class="upload-line">
+        <span data-i18n="upload_secondary">Oppure carica un estratto conto per un'analisi completa</span>
+        <button class="upload-btn" id="uploadBtn" data-i18n="upload_cta">Carica un file</button>
+      </div>
+      <div style="margin-top:10px;">
+        <button class="chip" id="btnSample" data-i18n="upload_sample">Prova con file di esempio</button>
+      </div>
+      <input type="file" id="fileInput" accept=".csv,.tsv,.pdf,.xlsx,.xls" hidden />
+    </section>
+
+    <!-- Agents mini-ribbon (only during processing) -->
+    <div class="agents-ribbon" id="agentsRibbon">
+      <span class="label" id="agentsRibbonLabel" data-i18n="analysis_in_progress">Analisi in corso…</span>
+      <span class="dots">
+        <span class="dot" data-agent="parser"></span>
+        <span class="dot" data-agent="analyzer"></span>
+        <span class="dot" data-agent="simulator"></span>
+        <span class="dot" data-agent="advisor"></span>
+      </span>
+    </div>
+
+    <!-- HITL banner -->
+    <div id="hitlBanner" class="banner" style="display:none;">
+      <span data-i18n="hitl_banner">La qualità del parsing è bassa. Verifica il file e conferma per procedere.</span>
+      <button id="btnConfirmHitl" data-i18n="confirm">Conferma</button>
+    </div>
+
+    <!-- How it works — visible while dashboard is hidden -->
+    <section class="how-it-works" id="howItWorks">
+      <h3 class="how-title" data-i18n="how_title">Tre passi. Nessuna sorpresa.</h3>
+      <p class="how-sub" data-i18n="how_sub">Dal foglio confuso al piano tuo, in meno di due minuti.</p>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-thumb">
+            <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="6" width="28" height="32" rx="4" stroke="#A100FF" stroke-width="1.6"/>
+              <path d="M14 16h16M14 22h16M14 28h10" stroke="#BE82FF" stroke-width="1.6" stroke-linecap="round"/>
+              <circle cx="34" cy="34" r="7" fill="#F472B6"/>
+              <path d="M31 34l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h4 data-i18n="how_1_title">1. Carica</h4>
+          <p data-i18n="how_1_desc">Trascina un estratto conto in CSV, PDF o Excel. Resta nel tuo browser: nessun account, nessun upload cloud.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-thumb">
+            <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="14" stroke="#7C3AED" stroke-width="1.6"/>
+              <path d="M22 8a14 14 0 0 1 12.12 21L22 22z" fill="#A100FF"/>
+              <path d="M22 8a14 14 0 0 1 12.12 21" stroke="#A100FF" stroke-width="1.6"/>
+              <path d="M22 22l-9.9 9.9" stroke="#F472B6" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h4 data-i18n="how_2_title">2. Capisci</h4>
+          <p data-i18n="how_2_desc">Numeri diventano storia: dove vanno i soldi, un punteggio di salute, un racconto scritto per te.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-thumb">
+            <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 34l8-8 6 5 10-12 8 6" stroke="#34D399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <circle cx="38" cy="25" r="3" fill="#F59E0B"/>
+              <path d="M6 38h32" stroke="#BE82FF" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h4 data-i18n="how_3_title">3. Cresci</h4>
+          <p data-i18n="how_3_desc">Micro-lezioni e scenari: piccoli passi per riprendere in mano le tue scelte, un mese alla volta.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard (hidden until file processed) -->
+    <section class="dashboard" id="dashboard" style="display:none;">
+      <h2 class="dashboard-title" data-i18n="dashboard_title">La tua analisi</h2>
+      <div class="grid">
+        <div class="card score-card">
+          <h3 class="card-title" data-i18n="score_title">Punteggio di salute finanziaria</h3>
+          <div class="score-ring-wrap">
+            <svg class="score-ring" viewBox="0 0 120 120" aria-hidden="true">
+              <defs>
+                <linearGradient id="scoreGrad" x1="0" x2="1">
+                  <stop offset="0" stop-color="#A100FF"/>
+                  <stop offset="1" stop-color="#F472B6"/>
+                </linearGradient>
+              </defs>
+              <circle class="score-ring-bg" cx="60" cy="60" r="50"/>
+              <circle class="score-ring-fg" id="scoreRingFg" cx="60" cy="60" r="50"/>
+            </svg>
+            <div class="score-ring-inner">
+              <span class="score-num" id="scoreValue">—</span>
+              <span class="score-of">/100</span>
+            </div>
+          </div>
+          <div class="score-interp" id="scoreInterp"></div>
+          <div class="breakdown" id="scoreBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3 class="card-title" data-i18n="categories_title">Dove vanno i tuoi soldi</h3>
+          <div class="pie-wrap"><canvas id="pieCanvas" width="220" height="220"></canvas></div>
+          <div class="legend" id="pieLegend"></div>
+        </div>
+        <div class="card fingerprint-card">
+          <h3 class="card-title">
+            <span data-i18n="fingerprint_title">Il ritmo dei tuoi soldi</span>
+            <span class="badge-new" data-i18n="badge_new">Nuovo</span>
+          </h3>
+          <div class="fingerprint-stage">
+            <svg class="fingerprint" id="fingerprintSvg" viewBox="-100 -100 200 200" aria-hidden="true">
+              <defs>
+                <radialGradient id="fpGrad" cx="0.5" cy="0.5" r="0.5">
+                  <stop offset="0%" stop-color="#A100FF" stop-opacity="0.9"/>
+                  <stop offset="55%" stop-color="#F472B6" stop-opacity="0.7"/>
+                  <stop offset="100%" stop-color="#34D399" stop-opacity="0.35"/>
+                </radialGradient>
+                <filter id="fpGlow"><feGaussianBlur stdDeviation="1.6"/></filter>
+              </defs>
+              <g class="fp-rings" opacity="0.16">
+                <circle r="30" fill="none" stroke="#0a0022" stroke-width="0.4"/>
+                <circle r="60" fill="none" stroke="#0a0022" stroke-width="0.4"/>
+                <circle r="90" fill="none" stroke="#0a0022" stroke-width="0.4"/>
+              </g>
+              <path id="fpShape" fill="url(#fpGrad)" filter="url(#fpGlow)" opacity="0.92"/>
+              <path id="fpOutline" fill="none" stroke="#7B00CC" stroke-width="1" stroke-linejoin="round" opacity="0.55"/>
+              <g id="fpDots"></g>
+            </svg>
+            <div class="fp-caption">—</div>
+          </div>
+          <div class="life-equiv" id="lifeEquiv"></div>
+        </div>
+        <div class="card story span-2">
+          <h3 class="card-title" data-i18n="story_title">La tua storia</h3>
+          <p id="storyText"></p>
+        </div>
+        <div class="card">
+          <h3 class="card-title" data-i18n="scenarios_title">Cosa succederebbe se…</h3>
+          <div id="scenariosList"></div>
+        </div>
+        <div class="card">
+          <h3 class="card-title" data-i18n="lessons_title">Micro-lezioni per te</h3>
+          <div id="lessonsList"></div>
+        </div>
+        <div class="card span-2 history-card" id="historySection">
+          <h3 class="card-title" data-i18n="history_title">Storico analisi</h3>
+          <table id="historyTable"><thead><tr><th>Data</th><th>File</th><th>Score</th><th>Righe</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </section>
   </main>
 
+  <!-- Legal strip -->
+  <div class="legal-strip" data-i18n="legal_strip">Contenuto educativo. Non è consulenza finanziaria personalizzata. I tuoi dati bancari non vengono mai salvati in cloud.</div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="name"><span class="nav-mark">B</span> Budget Storyteller</div>
+        <p data-i18n="footer_desc">Educazione finanziaria personale con AI. Semplice, sicura, mai bancaria.</p>
+        <p data-i18n="footer_copyright" style="font-size:12px;">© 2026 Budget Storyteller</p>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footer_col_product">Prodotto</h5>
+        <a role="button" tabindex="0" data-footer-action="scrollHow" data-i18n="fl_how">Come funziona</a>
+        <a role="button" tabindex="0" data-info="security" data-i18n="fl_security">Sicurezza</a>
+        <a role="button" tabindex="0" data-info="pricing" data-i18n="fl_pricing">Prezzi</a>
+        <a role="button" tabindex="0" data-info="roadmap" data-i18n="fl_roadmap">Roadmap</a>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footer_col_edu">Educazione</h5>
+        <a role="button" tabindex="0" data-info="glossary" data-i18n="fl_glossary">Glossario</a>
+        <a role="button" tabindex="0" data-info="blog" data-i18n="fl_blog">Blog</a>
+        <a role="button" tabindex="0" data-info="faq" data-i18n="fl_faq">FAQ</a>
+        <a role="button" tabindex="0" data-info="courses" data-i18n="fl_courses">Mini-corsi</a>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footer_col_legal">Legale</h5>
+        <a role="button" tabindex="0" data-info="privacyPolicy" data-i18n="fl_privacy">Privacy Policy</a>
+        <a role="button" tabindex="0" data-info="terms" data-i18n="fl_terms">Termini di Servizio</a>
+        <a role="button" tabindex="0" data-info="cookie" data-i18n="fl_cookie">Cookie</a>
+        <a role="button" tabindex="0" data-info="aiDisclaimer" data-i18n="fl_ai">Disclaimer AI</a>
+        <a role="button" tabindex="0" data-info="gdpr" data-i18n="fl_gdpr">GDPR</a>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footer_col_company">Azienda</h5>
+        <a role="button" tabindex="0" data-info="about" data-i18n="fl_about">Chi siamo</a>
+        <a role="button" tabindex="0" data-footer-action="contact" data-i18n="fl_contact">Contatti</a>
+        <a role="button" tabindex="0" data-info="careers" data-i18n="fl_careers">Careers</a>
+        <a role="button" tabindex="0" data-info="press" data-i18n="fl_press">Press</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="made_in">Made with ♥ in Turin</span>
+      <span class="accenture"><span class="accenture-mark"></span><span data-i18n="accenture_note">Sviluppato per Accenture Hagenthon 2026</span></span>
+    </div>
+  </footer>
+
   <script type="module" src="main.js"></script>
+  <script type="module" src="pages.js"></script>
 </body>
 </html>

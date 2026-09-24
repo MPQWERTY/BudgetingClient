@@ -3,141 +3,261 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Budget Storyteller — Hagenthon</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Budget Storyteller — Pitch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/accenture-brand.css">
 </head>
 <body>
 <div class="progress" id="progress"></div>
 <div class="deck" id="deck">
 
-  <!-- 1. Problema -->
-  <section class="slide active">
-    <div class="slide-header">
-      <div class="brand"><div class="brand-mark">&gt;</div><div class="brand-name">Budget Storyteller</div></div>
-      <div class="slide-num">01 / 05</div>
+  <!-- ========== SLIDE 1 · PAIN ========== -->
+  <section class="slide s-pain active" data-slide="1">
+    <span class="slide-tag">01 / 05</span>
+    <pre class="ledger">01/09/2026  BONIFICO SEPA CRO123456789012345 UMLD9987...   -1.234,56 EUR
+01/09/2026  ADD.DIR.RID FASTWEB CID.IT1234ABCDE...          -34,90 EUR
+02/09/2026  COMM.OP.BONIFICO ONLINE                          -1,50 EUR
+02/09/2026  PAG.POS 01/09 CONAD SUPERSTORE MILANO           -78,43 EUR
+03/09/2026  ACC.STIPENDIO ACCENTURE SPA REF.98771         +3.240,00 EUR
+03/09/2026  IMPOSTA DI BOLLO TRIM.                           -8,55 EUR
+04/09/2026  PRELIEVO ATM INTESA VIA DANTE 12                -200,00 EUR
+05/09/2026  ADD.SDD ENEL ENERGIA MANDATO IT98K...           -112,40 EUR
+06/09/2026  PAG.POS ESSELUNGA VIA SOLARI                    -63,20 EUR
+07/09/2026  RID.INAIL NON DOMICILIATA CID12                  -18,00 EUR
+08/09/2026  DISP.PERIODICA MUTUO PRIMA CASA               -712,00 EUR
+09/09/2026  PAG.POS AMAZON EU SARL LUX                      -49,99 EUR
+10/09/2026  ADD.DIR.RID VODAFONE OMNITEL BV                  -22,90 EUR
+10/09/2026  ACC.RIMB.SPESE SALUTE UNISALUTE                  +84,00 EUR
+11/09/2026  PAG.POS FARMACIA COMUNALE 7                     -14,50 EUR
+12/09/2026  BONIFICO A FAVORE DI M. ROSSI CAUS.LOC.SET.    -650,00 EUR
+13/09/2026  PAG.POS TRENITALIA APP MOBILE                   -47,80 EUR
+14/09/2026  COMM.CANONE MENSILE CONTO PLUS                   -3,50 EUR
+15/09/2026  ADD.SDD NETFLIX INTL BV                          -12,99 EUR
+16/09/2026  PAG.POS BAR CENTRALE MILANO                      -4,20 EUR
+17/09/2026  ADD.SDD SPOTIFY AB                               -10,99 EUR
+18/09/2026  BONIFICO SEPA CRO87654321000998877 IPO...      -520,00 EUR
+19/09/2026  PAG.POS DECATHLON ITALIA MILANO C.MO             -89,00 EUR
+20/09/2026  ADD.DIR.RID ACEA ATO2 SPA                        -46,70 EUR
+21/09/2026  PAG.POS IKEA CARUGATE                          -238,10 EUR
+22/09/2026  COMM.OP.PRELIEVO ALTRA BANCA                     -2,00 EUR
+23/09/2026  ACC.BONIFICO DA G. VERDI CAUS. RESTITUZ.        +150,00 EUR
+24/09/2026  PAG.POS GLOVO APP DELIVERY                       -18,60 EUR
+25/09/2026  ADD.SDD ASSICURAZIONE AUTO GENERTEL             -68,20 EUR
+26/09/2026  PAG.POS RISTORANTE DA MARIO                      -52,00 EUR
+27/09/2026  DISP.PERIODICA PIANO ACCUMULO ETF WORLD        -300,00 EUR
+28/09/2026  PAG.POS APPLE.COM/BILL IE                        -0,99 EUR
+29/09/2026  ADD.DIR.RID SKY ITALIA SRL                       -45,90 EUR
+30/09/2026  BONIFICO SEPA CRO112233445566778899 STIP...    +240,00 EUR
+30/09/2026  IMPOSTA BOLLO EXTRA UE                           -2,00 EUR</pre>
+    <div class="pain-overlay">
+      <h1>Chi lo capisce, questo?</h1>
+      <p>Milioni di persone ricevono ogni mese un foglio come questo. E si fermano lì.</p>
     </div>
-    <h3>Il Problema</h3>
-    <h1>Milioni di persone <span class="accent">non capiscono</span><br>i loro estratti conto.</h1>
-    <p>TAEG, spese ricorrenti, categorie confuse. L'educazione finanziaria è inaccessibile, e chi ne ha più bisogno ne rimane escluso.</p>
-    <div class="footer"><span>Hagenthon 2026 · Tema 02 Inclusione Finanziaria</span><span>Accenture</span></div>
   </section>
 
-  <!-- 2. Soluzione -->
-  <section class="slide">
-    <div class="slide-header">
-      <div class="brand"><div class="brand-mark">&gt;</div><div class="brand-name">Budget Storyteller</div></div>
-      <div class="slide-num">02 / 05</div>
-    </div>
-    <h3>La Soluzione</h3>
-    <h1>Un <span class="accent">racconto agentico</span><br>dei tuoi soldi.</h1>
-    <div class="grid-3" style="margin-top: 30px;">
-      <div class="card"><h4>Carica</h4><p>CSV, PDF o XLSX. Anche il file più confuso.</p></div>
-      <div class="card"><h4>Ascolta</h4><p>5 agenti raccontano dove vanno i soldi, in parole semplici.</p></div>
-      <div class="card"><h4>Impara</h4><p>Micro-lezioni personalizzate sulle tue aree deboli.</p></div>
-    </div>
-    <div class="footer"><span>Educazione, non consulenza.</span><span>02 / 05</span></div>
+  <!-- ========== SLIDE 2 · PROMISE ========== -->
+  <section class="slide s-promise" data-slide="2">
+    <span class="slide-tag">02 / 05</span>
+    <div class="promise-quote">E se invece diventasse<br><em>una storia semplice?</em></div>
+    <div class="promise-sub">Budget Storyteller trasforma il rumore in senso.</div>
   </section>
 
-  <!-- 3. Architettura -->
-  <section class="slide">
-    <div class="slide-header">
-      <div class="brand"><div class="brand-mark">&gt;</div><div class="brand-name">Budget Storyteller</div></div>
-      <div class="slide-num">03 / 05</div>
-    </div>
-    <h3>Architettura Agentica</h3>
-    <h2>5 agenti specializzati, orchestrati.</h2>
-    <div class="grid-2">
-      <div class="arch">FILE ─► ORCHESTRATOR
-         │
-         ├─► PARSER    (estrae transazioni)
-         │      │
-         │      ▼
-         ├─► ANALYZER  (categorizza + narra)
-         │      │
-         │  ┌───┴───┐
-         │  ▼       ▼
-         ├─►SIM   ADVISOR   (paralleli)
-         │      │
-         ▼      ▼
-      STATE  ─► UI DASHBOARD</div>
-      <div>
-        <p><b style="color:var(--text);">Ogni agente</b> ha input/output JSON tipizzato, fallback deterministico, retry + timeout.</p>
-        <p style="margin-top:16px;"><b style="color:var(--text);">Le istruzioni</b> in <code>agents/*.md</code> sono lette dal frontend come system prompt: <b>la spec vale quello che esegue</b>.</p>
-        <div style="margin-top:20px;">
-          <span class="chip">Haiku 4.5</span><span class="chip">Sonnet 5</span><span class="chip">HITL</span><span class="chip">Fallback euristici</span>
+  <!-- ========== SLIDE 3 · PRODUCT ========== -->
+  <section class="slide s-product" data-slide="3">
+    <span class="slide-tag">03 / 05</span>
+    <div class="product-inner">
+      <div class="product-copy">
+        <h2>Comprensione<br>in forma <span>visiva.</span></h2>
+        <p>Numeri, storia, lezioni. Nella tua lingua, sul tuo caso reale — non su un template generico.</p>
+      </div>
+      <div class="stage">
+        <div class="scene">
+          <div class="card c1">
+            <span class="label">Score complessivo</span>
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#EDE9FE" stroke-width="10"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="url(#g1)" stroke-width="10" stroke-linecap="round"
+                      stroke-dasharray="314" stroke-dashoffset="88" transform="rotate(-90 60 60)"/>
+              <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#A100FF"/><stop offset="1" stop-color="#F472B6"/></linearGradient></defs>
+            </svg>
+            <div class="big">72<small>/100</small></div>
+          </div>
+
+          <div class="card c2">
+            <h4>Dove vanno i tuoi soldi</h4>
+            <svg viewBox="0 0 200 200">
+              <g transform="translate(100 100)">
+                <path d="M0 -80 A80 80 0 0 1 76.08 24.72 L0 0 Z" fill="#A100FF"/>
+                <path d="M76.08 24.72 A80 80 0 0 1 24.72 76.08 L0 0 Z" fill="#BE82FF"/>
+                <path d="M24.72 76.08 A80 80 0 0 1 -47 64.72 L0 0 Z" fill="#F472B6"/>
+                <path d="M-47 64.72 A80 80 0 0 1 -76.08 -24.72 L0 0 Z" fill="#34D399"/>
+                <path d="M-76.08 -24.72 A80 80 0 0 1 -24.72 -76.08 L0 0 Z" fill="#F59E0B"/>
+                <path d="M-24.72 -76.08 A80 80 0 0 1 0 -80 L0 0 Z" fill="#60A5FA"/>
+              </g>
+            </svg>
+            <div class="legend">
+              <span><i style="background:#A100FF"></i>Casa 32%</span>
+              <span><i style="background:#BE82FF"></i>Spesa 18%</span>
+              <span><i style="background:#F472B6"></i>Trasporti 12%</span>
+              <span><i style="background:#34D399"></i>Utenze 14%</span>
+              <span><i style="background:#F59E0B"></i>Tempo libero 16%</span>
+              <span><i style="background:#60A5FA"></i>Altro 8%</span>
+            </div>
+          </div>
+
+          <div class="card c3">
+            <h4>La tua storia, questo mese</h4>
+            <p>Il <b>68% del tuo reddito</b> va a spese essenziali. Il resto si divide tra piccoli piaceri quotidiani e un accumulo lento ma costante. Rispetto ad agosto hai <b>ridotto del 12%</b> le uscite non pianificate. Piccole scelte, direzione chiara.</p>
+          </div>
+
+          <div class="card c4">
+            <div class="thumb">
+              <svg width="60" height="46" viewBox="0 0 60 46" fill="none">
+                <rect x="6" y="8" width="48" height="30" rx="4" stroke="#A100FF" stroke-width="1.5"/>
+                <path d="M14 26 L24 18 L34 24 L46 14" stroke="#F472B6" stroke-width="1.5" fill="none"/>
+                <circle cx="46" cy="14" r="2.5" fill="#F472B6"/>
+              </svg>
+            </div>
+            <h4>Micro-lezione</h4>
+            <span>Cos'è un fondo di emergenza · 2 min</span>
+          </div>
+
+          <div class="card c5">
+            <h4>Scenari</h4>
+            <div class="bars">
+              <div class="bar" style="height:30%"></div>
+              <div class="bar" style="height:55%"></div>
+              <div class="bar" style="height:42%"></div>
+              <div class="bar" style="height:78%"></div>
+              <div class="bar" style="height:62%"></div>
+              <div class="bar" style="height:90%"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="footer"><span>Multi-agent · JSON strict · deterministic fallbacks</span><span>03 / 05</span></div>
   </section>
 
-  <!-- 4. Demo + Features -->
-  <section class="slide">
-    <div class="slide-header">
-      <div class="brand"><div class="brand-mark">&gt;</div><div class="brand-name">Budget Storyteller</div></div>
-      <div class="slide-num">04 / 05</div>
+  <!-- ========== SLIDE 4 · PHILOSOPHY ========== -->
+  <section class="slide s-philo" data-slide="4">
+    <span class="slide-tag">04 / 05</span>
+    <div class="philo-top">
+      <div class="avatars">
+        <div class="avatar a1">M</div>
+        <div class="avatar a2">L</div>
+        <div class="avatar a3">S</div>
+      </div>
+      <div class="manifesto">
+        <div class="philo-eyebrow">Dalle persone, per le persone</div>
+        <h2 class="philo-headline">Semplice fuori.<br><em>Potente dentro.</em></h2>
+        <p>Non ti diciamo dove investire i tuoi soldi.</p>
+        <p>Ti aiutiamo a capire dove sono gi&agrave;.</p>
+        <p>Ti diamo gli strumenti per riprendere in mano le tue scelte.</p>
+        <p>E la libert&agrave; di sbagliare, imparare, evolvere.</p>
+      </div>
     </div>
-    <h3>In Azione</h3>
-    <h2>Dal caos al racconto in 15 secondi.</h2>
-    <div class="grid-3">
-      <div class="card"><h4>Score 0-100</h4><p>5 dimensioni: reddito, spese, risparmio, emergenza, debito.</p></div>
-      <div class="card"><h4>Storia in linguaggio semplice</h4><p>Narrativa generata nella lingua dell'utente (IT/EN auto).</p></div>
-      <div class="card"><h4>Scenari what-if</h4><p>"Se risparmi €50/mese, in 12 mesi…" — solo matematica, mai raccomandazioni.</p></div>
-      <div class="card"><h4>Chat Q&A</h4><p>Chiedi "cos'è TAEG?" → risposta + mini-lezione proposta.</p></div>
-      <div class="card"><h4>Micro-lezioni</h4><p>Difficoltà adattiva, quiz interattivi, tracking progressi.</p></div>
-      <div class="card"><h4>Storico locale</h4><p>Sessioni + score in localStorage, nessun dato in cloud.</p></div>
+    <div class="caps">
+      <div class="cap">
+        <div class="cap-ico" style="background:linear-gradient(135deg,var(--lavender),var(--violet))">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/><path d="M17 4l3 2-3 2"/></svg>
+        </div>
+        <h4>Si adatta a te</h4>
+        <p>Ogni analisi impara dalle tue scelte e dai tuoi obiettivi.</p>
+      </div>
+      <div class="cap">
+        <div class="cap-ico" style="background:linear-gradient(135deg,var(--rose),#EC4899)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20l4-2 2-4 4-2 2-4 4-2"/><circle cx="5" cy="20" r="1.5"/><circle cx="11" cy="14" r="1.5"/><circle cx="17" cy="8" r="1.5"/></svg>
+        </div>
+        <h4>Ti segue passo passo</h4>
+        <p>Micro-lezioni, quiz mirati e feedback continuo sul tuo percorso.</p>
+      </div>
+      <div class="cap">
+        <div class="cap-ico" style="background:linear-gradient(135deg,var(--mint),#059669)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/></svg>
+        </div>
+        <h4>Stime e previsioni</h4>
+        <p>Scenari &laquo;e se&hellip;&raquo; e proiezioni a 6-12 mesi sui tuoi dati.</p>
+      </div>
+      <div class="cap">
+        <div class="cap-ico" style="background:linear-gradient(135deg,var(--amber),#D97706)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg>
+        </div>
+        <h4>Semplice, non semplicistico</h4>
+        <p>Un'interfaccia lineare. Sotto, cinque agenti che lavorano per te.</p>
+      </div>
     </div>
-    <div class="footer"><span>Roadmap Beta: previsioni, gamification, integrazione bancaria</span><span>04 / 05</span></div>
+    <div class="disclaimer">Nessun consiglio finanziario. Solo comprensione.</div>
   </section>
 
-  <!-- 5. Impatto -->
-  <section class="slide">
-    <div class="slide-header">
-      <div class="brand"><div class="brand-mark">&gt;</div><div class="brand-name">Budget Storyteller</div></div>
-      <div class="slide-num">05 / 05</div>
-    </div>
-    <h3>Impatto</h3>
-    <div class="grid-2">
-      <div>
-        <div class="big-num">+40%</div>
-        <p style="margin-top:12px;">di comprensione dei termini finanziari dopo 3 mini-lezioni (target).</p>
+  <!-- ========== SLIDE 5 · EVOLUTION ========== -->
+  <section class="slide s-evo" data-slide="5">
+    <span class="slide-tag">05 / 05</span>
+    <h2>Non un&rsquo;app. Un compagno di evoluzione.</h2>
+    <div class="timeline">
+      <div class="stop">
+        <div class="dot"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="12" height="16" rx="1.5"/><circle cx="16" cy="16" r="4"/><line x1="19" y1="19" x2="22" y2="22"/></svg></div>
+        <h3>Oggi</h3><p>Capisci il tuo estratto conto</p>
       </div>
-      <div>
-        <h2>Perché funziona</h2>
-        <ul>
-          <li>Non è un chatbot: è un sistema con 5 agenti orchestrati.</li>
-          <li>Educazione + comprensione, mai consigli di investimento.</li>
-          <li>Robustezza built-in: ogni LLM ha un fallback deterministico.</li>
-          <li>Trasparenza: le istruzioni degli agenti sono anche il codice che gira.</li>
-        </ul>
+      <div class="stop">
+        <div class="dot"><svg viewBox="0 0 24 24"><polyline points="3,18 9,12 13,15 21,6"/><polyline points="15,6 21,6 21,12"/></svg></div>
+        <h3>In 30 giorni</h3><p>Identifichi le tue abitudini reali</p>
+      </div>
+      <div class="stop">
+        <div class="dot"><svg viewBox="0 0 24 24"><path d="M12 3 L20 6 V12 C20 17 16 20 12 21 C8 20 4 17 4 12 V6 Z"/></svg></div>
+        <h3>In 6 mesi</h3><p>Costruisci il tuo primo fondo di emergenza</p>
+      </div>
+      <div class="stop">
+        <div class="dot"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polygon points="12,6 15,14 12,12 9,14" fill="#fff" stroke="none"/></svg></div>
+        <h3>In un anno</h3><p>Prendi decisioni informate, non ansiose</p>
       </div>
     </div>
-    <div class="footer"><span>Team Accenture · Hagenthon 2026 · 5h</span><span>05 / 05</span></div>
+    <div class="evo-close">I tuoi soldi. Le tue scelte. Con pi&ugrave; consapevolezza.</div>
+    <div class="evo-cta">
+      <a class="proto-btn primary" href="http://localhost:8000/?mock=1" target="_blank" rel="noopener">PROVA ORA &rarr;</a>
+    </div>
+    <div class="attribution">Sviluppato per Accenture Hagenthon 2026 &middot; Made in Torino</div>
   </section>
 
 </div>
 
-<div class="nav">
-  <button id="prev">‹ Prev</button>
-  <button id="next">Next ›</button>
-</div>
+<nav class="nav">
+  <button id="prev" aria-label="Precedente">&lsaquo; Prev</button>
+  <span class="count"><span id="cur">1</span>/<span id="tot">5</span></span>
+  <button id="next" aria-label="Successiva">Next &rsaquo;</button>
+</nav>
 
 <script>
-const slides = document.querySelectorAll(".slide");
-let idx = 0;
-function go(n) {
-  idx = Math.max(0, Math.min(slides.length - 1, n));
-  slides.forEach((s, i) => s.classList.toggle("active", i === idx));
-  document.getElementById("progress").style.width = `${((idx + 1) / slides.length) * 100}%`;
-}
-document.getElementById("prev").onclick = () => go(idx - 1);
-document.getElementById("next").onclick = () => go(idx + 1);
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") go(idx + 1);
-  if (e.key === "ArrowLeft" || e.key === "PageUp") go(idx - 1);
-  if (e.key === "Home") go(0); if (e.key === "End") go(slides.length - 1);
-});
-go(0);
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const total=slides.length;
+  const progress=document.getElementById('progress');
+  const cur=document.getElementById('cur');
+  document.getElementById('tot').textContent=total;
+  let i=0;
+  function show(n){
+    n=Math.max(0,Math.min(total-1,n));
+    if(n===i) return;
+    slides[i].classList.remove('active');
+    // force restart of CSS animations by reflow trick
+    slides[n].classList.remove('active');
+    void slides[n].offsetWidth;
+    slides[n].classList.add('active');
+    i=n;
+    cur.textContent=i+1;
+    progress.style.width=((i+1)/total*100)+'%';
+  }
+  progress.style.width=(1/total*100)+'%';
+  document.getElementById('next').onclick=()=>show(i+1);
+  document.getElementById('prev').onclick=()=>show(i-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown') {e.preventDefault();show(i+1);}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp') {e.preventDefault();show(i-1);}
+    else if(e.key==='Home') show(0);
+    else if(e.key==='End') show(total-1);
+  });
+})();
 </script>
-</body></html>
+</body>
+</html>

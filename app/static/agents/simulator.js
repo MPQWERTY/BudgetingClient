@@ -1,4 +1,4 @@
-import { callAgent, loadSystemPrompt } from "../lib/claude.js";
+import { callAgent, loadSystemPrompt, isMock } from "../lib/claude.js";
 import { getLang } from "../lib/i18n.js";
 
 const MOCK = {
@@ -34,6 +34,10 @@ function fallback(categories, lang) {
 
 export async function runSimulator({ categories, totals }) {
   const lang = getLang();
+  if (isMock()) {
+    await new Promise(r => setTimeout(r, 400 + Math.random() * 300));
+    return fallback(categories, lang);
+  }
   const system = await loadSystemPrompt("SIMULATOR_AGENT.md");
   const user = [
     `Lingua utente: ${lang}.`,
