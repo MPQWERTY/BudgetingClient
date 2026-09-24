@@ -182,6 +182,36 @@ const EQUIV_UNITS = {
   ],
 };
 
+// ---------- Before / After ----------
+// Genera 5 righe "cripitche" ricostruite dalle transazioni reali, per contrasto con la narrativa.
+function renderBeforeAfter(transactions) {
+  const box = $("#baBefore");
+  if (!box || !transactions?.length) return;
+  const sample = transactions.slice(0, 5);
+  const cryptify = (t) => {
+    const d = t.date ? t.date.split("-").reverse().join("/") : "??/??/????";
+    const desc = String(t.description || "").toUpperCase()
+      .replace(/BONIFICO/g, "DISP.BONIFICO")
+      .replace(/STIPENDIO/g, "ACC.STIPENDIO ACCENTURE SPA REF.98771")
+      .replace(/MUTUO/g, "DISP.PERIODICA MUTUO PRIMA CASA")
+      .replace(/ENEL/g, "ADD.SDD ENEL ENERGIA MANDATO IT98K7823...")
+      .replace(/TIM|VODAFONE|WIND|ILIAD/g, "ADD.DIR.RID $& CID.IT1234ABCDE...")
+      .replace(/NETFLIX|SPOTIFY|DISNEY|AMAZON PRIME/g, "ADD.SDD $& INTL BV")
+      .replace(/AMAZON/g, "PAG.POS $& EU SARL LUX")
+      .replace(/(ESSELUNGA|CARREFOUR|COOP|CONAD|LIDL)/g, "PAG.POS $1 SUPERSTORE")
+      .replace(/RISTORANTE|BAR|PIZZ/g, "PAG.POS $&")
+      .replace(/Q8|ENI|ESSO|AGIP/g, "PAG.POS $& STAZIONE SERVIZIO")
+      .replace(/ATM|GTT|TRENITALIA|ITALO/g, "PAG.POS $& APP MOBILE")
+      .replace(/FARMACIA/g, "PAG.POS $& COMUNALE")
+      .slice(0, 45);
+    const amt = t.amount >= 0
+      ? `+${t.amount.toFixed(2).replace(".", ",")}`
+      : `-${Math.abs(t.amount).toFixed(2).replace(".", ",")}`;
+    return `${d}  ${desc.padEnd(45, " ")}  ${amt} EUR`;
+  };
+  box.innerHTML = sample.map((t, i) => `<div class="ba-line${i > 2 ? " dim" : ""}">${cryptify(t)}</div>`).join("");
+}
+
 function renderLifeEquivalents(entries) {
   const box = $("#lifeEquiv");
   if (!box || !entries.length) return;
@@ -246,6 +276,7 @@ function renderDashboard(res) {
   renderFingerprint(res.parse?.transactions || []);
   renderLifeEquivalents(entries);
   $("#storyText").textContent = res.analysis?.narrative || "";
+  renderBeforeAfter(res.parse?.transactions || []);
   $("#scenariosList").innerHTML = (res.simulation?.scenarios || []).map(s => `
     <div class="scenario">
       <h4>${s.title}</h4>

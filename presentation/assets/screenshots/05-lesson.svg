@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="Mini lezione modale">
+  <defs>
+    <radialGradient id="bgRose" cx="0" cy="0" r="1" gradientTransform="translate(120 120) scale(520)">
+      <stop offset="0" stop-color="#F472B6" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#F472B6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bgLav" cx="0" cy="0" r="1" gradientTransform="translate(1180 620) scale(560)">
+      <stop offset="0" stop-color="#A100FF" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#A100FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hilite" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#A100FF"/>
+      <stop offset="1" stop-color="#F472B6"/>
+    </linearGradient>
+    <filter id="blur" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <filter id="modalShadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="36" flood-color="#0a0022" flood-opacity="0.28"/>
+    </filter>
+    <style>
+      .body{font-family:Inter,system-ui,sans-serif;fill:#0a0022}
+      .brand{font-family:Fraunces,'Times New Roman',serif;fill:#0a0022}
+      .muted{fill:#6b6785}
+    </style>
+  </defs>
+
+  <!-- Background (blurred dashboard silhouette) -->
+  <rect width="1280" height="720" fill="#ffffff"/>
+  <rect width="1280" height="720" fill="url(#bgRose)"/>
+  <rect width="1280" height="720" fill="url(#bgLav)"/>
+
+  <g filter="url(#blur)" opacity="0.55">
+    <rect x="60" y="80" width="380" height="220" rx="18" fill="#EDE1FF"/>
+    <rect x="460" y="80" width="380" height="220" rx="18" fill="#FCE7F3"/>
+    <rect x="860" y="80" width="360" height="220" rx="18" fill="#EDE1FF"/>
+    <rect x="60" y="320" width="1160" height="150" rx="18" fill="#F5EEFF"/>
+    <rect x="60" y="490" width="380" height="72" rx="14" fill="#EDE1FF"/>
+    <rect x="460" y="490" width="380" height="72" rx="14" fill="#FCE7F3"/>
+    <rect x="860" y="490" width="360" height="72" rx="14" fill="#EDE1FF"/>
+  </g>
+
+  <!-- overlay dim -->
+  <rect width="1280" height="720" fill="#0a0022" opacity="0.35"/>
+
+  <!-- MODAL -->
+  <g transform="translate(280 80)" filter="url(#modalShadow)">
+    <rect x="0" y="0" width="720" height="560" rx="20" fill="#ffffff"/>
+
+    <!-- progress bar -->
+    <rect x="0" y="0" width="720" height="6" rx="3" fill="#EDE1FF"/>
+    <rect x="0" y="0" width="432" height="6" rx="3" fill="url(#hilite)"/>
+
+    <!-- close btn -->
+    <g transform="translate(674 26)">
+      <circle cx="12" cy="12" r="14" fill="#F5EEFF"/>
+      <path d="M6 6 L18 18 M18 6 L6 18" stroke="#6b6785" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <!-- header -->
+    <text x="36" y="60" class="body" font-size="12" fill="#6b6785" font-weight="600">MINI LEZIONE · 3 di 5</text>
+    <text x="36" y="100" class="brand" font-size="24" font-weight="600">Costruire un fondo di emergenza</text>
+    <text x="36" y="126" class="body" font-size="13" fill="#6b6785">beginner · 8 min · Dove tenerlo</text>
+
+    <!-- content -->
+    <text x="36" y="176" class="body" font-size="16" font-weight="600">Dove tenerlo</text>
+    <text x="36" y="204" class="body" font-size="14">Il fondo d'emergenza serve subito quando serve. Va tenuto separato dal</text>
+    <text x="36" y="224" class="body" font-size="14">conto quotidiano — così non lo intacchi per errore — e su uno strumento</text>
+    <text x="36" y="244" class="body" font-size="14">liquido: nessun vincolo, disponibile in 24-48h.</text>
+
+    <text x="36" y="286" class="body" font-size="14" fill="#6b6785" font-style="italic">Domanda</text>
+    <text x="36" y="308" class="body" font-size="15" font-weight="600">Dove tieni il tuo fondo d'emergenza?</text>
+
+    <!-- options -->
+    <!-- opt A -->
+    <g transform="translate(36 328)">
+      <rect x="0" y="0" width="648" height="44" rx="10" fill="#F8F5FE" stroke="#e9e4f3"/>
+      <circle cx="22" cy="22" r="9" fill="none" stroke="#a19cb6" stroke-width="1.5"/>
+      <text x="44" y="27" class="body" font-size="14">Nel conto corrente principale, così ce l'ho sotto mano.</text>
+    </g>
+    <!-- opt B - correct -->
+    <g transform="translate(36 380)">
+      <rect x="0" y="0" width="648" height="70" rx="10" fill="#ECFDF5" stroke="#34D399" stroke-width="2"/>
+      <circle cx="22" cy="22" r="10" fill="#34D399"/>
+      <path d="M17 22 L21 26 L28 18" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="44" y="27" class="body" font-size="14" font-weight="600">Su un conto deposito o conto separato ad alta liquidità.</text>
+      <text x="44" y="52" class="body" font-size="13" fill="#065f46">✓ Giusto — Un conto separato ad alta liquidità è ideale: non lo confondi con le spese</text>
+      <text x="44" y="66" class="body" font-size="13" fill="#065f46">quotidiane e resta accessibile in 24-48h senza penali.</text>
+    </g>
+    <!-- opt C -->
+    <g transform="translate(36 458)">
+      <rect x="0" y="0" width="648" height="44" rx="10" fill="#F8F5FE" stroke="#e9e4f3"/>
+      <circle cx="22" cy="22" r="9" fill="none" stroke="#a19cb6" stroke-width="1.5"/>
+      <text x="44" y="27" class="body" font-size="14">In un ETF azionario, così cresce.</text>
+    </g>
+
+    <!-- continue button -->
+    <g transform="translate(500 516)">
+      <rect x="0" y="0" width="184" height="34" rx="17" fill="url(#hilite)"/>
+      <text x="92" y="22" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#fff" font-weight="600">Continua →</text>
+    </g>
+    <text x="36" y="538" class="body" font-size="12" fill="#6b6785">60% completato</text>
+  </g>
+</svg>

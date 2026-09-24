@@ -36,33 +36,26 @@
             <div class="avatar-menu-email">guest@budgetstoryteller.local</div>
           </div>
           <ul>
-            <li><button type="button" onclick="document.getElementById('avatarMenu').classList.remove('open'); (window.openPage||window.openProfileModal||(()=>alert('Profilo non disponibile')))('profile'); return false;">
+            <li><button type="button" onclick="window.__bsGoto('profile')">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg>
               <span>My profile</span>
             </button></li>
-            <li><button type="button" onclick="document.getElementById('avatarMenu').classList.remove('open'); (window.openPage||window.openSettingsModal||(()=>alert('Impostazioni non disponibili')))('settings'); return false;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <li><button type="button" onclick="window.__bsGoto('settings')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/></svg>
               <span>Settings</span>
             </button></li>
-            <li><button type="button" onclick="document.getElementById('avatarMenu').classList.remove('open'); if(window.openPage){window.openPage('history');}else{document.querySelector('.history-card')?.scrollIntoView({behavior:'smooth'});} return false;">
+            <li><button type="button" onclick="window.__bsGoto('history')">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>
               <span>Analysis history</span>
             </button></li>
-            <li><button type="button" onclick="document.getElementById('avatarMenu').classList.remove('open'); (window.openPage||window.openPrivacyModal||(()=>alert('Privacy non disponibile')))('privacy'); return false;">
+            <li><button type="button" onclick="window.__bsGoto('privacy')">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/></svg>
               <span>Privacy &amp; data</span>
             </button></li>
           </ul>
           <div class="avatar-menu-sep"></div>
           <ul>
-            <li><button type="button" onclick="document.getElementById('avatarMenu').classList.remove('open'); (window.openPage||(()=>alert('Playground non disponibile')))('playground'); return false;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6.6a2 2 0 0 1-.3 1.06L4.7 19a2 2 0 0 0 1.7 3h11.2a2 2 0 0 0 1.7-3l-5-8.34a2 2 0 0 1-.3-1.06V3"/><path d="M7.5 15h9"/></svg>
-              <span>Playground</span>
-            </button></li>
-          </ul>
-          <div class="avatar-menu-sep"></div>
-          <ul>
-            <li><button type="button" class="danger" onclick="document.getElementById('avatarMenu').classList.remove('open'); if(window.openPage){window.openPage('logout');}else{if(confirm('Cancellare tutti i dati locali?')){localStorage.clear(); location.reload();}} return false;">
+            <li><button type="button" class="danger" onclick="window.__bsGoto('logout')">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
               <span>Sign out</span>
             </button></li>
@@ -70,6 +63,33 @@
         </div>
       </div>
       <script>
+        // Router menu utente — 100% inline, zero dipendenze da moduli
+        window.__bsGoto = function(name) {
+          var m = document.getElementById('avatarMenu');
+          if (m) m.classList.remove('open');
+          if (typeof window.openPage === 'function') {
+            try { window.openPage(name); return; }
+            catch (err) { console.error('openPage error:', err); }
+          }
+          // Fallback: overlay con contenuto hardcoded
+          var titles = { profile: 'Il mio profilo', settings: 'Impostazioni', history: 'Storico analisi', privacy: 'Privacy e dati', logout: 'Esci' };
+          if (name === 'logout') {
+            if (confirm('Cancellare tutti i dati locali?')) { localStorage.clear(); location.reload(); }
+            return;
+          }
+          var overlay = document.createElement('div');
+          overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+          var card = document.createElement('div');
+          card.style.cssText = 'background:#fff;border-radius:16px;padding:32px;max-width:520px;width:100%;box-shadow:0 30px 60px rgba(0,0,0,0.3);';
+          card.innerHTML = '<h2 style="margin:0 0 12px;font-family:Fraunces,serif;font-size:22px;">' + (titles[name] || name) + '</h2>' +
+            '<p style="color:#6b7280;line-height:1.6;margin:0 0 20px;">Pagina in caricamento… se questa schermata resta, il modulo pages non è stato caricato. Verifica la console del browser (F12).</p>' +
+            '<button onclick="this.closest(\'[data-fb-overlay]\').remove()" style="padding:10px 20px;background:#A100FF;color:#fff;border:none;border-radius:10px;cursor:pointer;">Chiudi</button>';
+          overlay.setAttribute('data-fb-overlay', '');
+          overlay.appendChild(card);
+          overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+          document.body.appendChild(overlay);
+        };
+        // Chiudi menu al click fuori
         document.addEventListener('click', function(e){
           var m = document.getElementById('avatarMenu');
           var w = document.getElementById('userMenuWrap');
@@ -244,9 +264,35 @@
           </div>
           <div class="life-equiv" id="lifeEquiv"></div>
         </div>
-        <div class="card story span-2">
-          <h3 class="card-title" data-i18n="story_title">La tua storia</h3>
-          <p id="storyText"></p>
+        <div class="card ba-card span-2">
+          <h3 class="card-title">
+            <span data-i18n="ba_title">Prima → Dopo</span>
+            <span class="badge-new" data-i18n="ba_badge">Trasformazione</span>
+          </h3>
+          <div class="ba-grid">
+            <div class="ba-col ba-before">
+              <div class="ba-label" data-i18n="ba_before_label">Prima · quello che vedevi</div>
+              <div class="ba-content" id="baBefore">
+                <div class="ba-line">08/09/2026  DISP.PERIODICA MUTUO PRIMA CASA          -712,00 EUR</div>
+                <div class="ba-line">05/09/2026  ADD.SDD ENEL ENERGIA MANDATO IT98K…       -112,40 EUR</div>
+                <div class="ba-line">02/09/2026  COMM.OP.BONIFICO ONLINE                     -1,50 EUR</div>
+                <div class="ba-line dim">03/09/2026  IMPOSTA DI BOLLO TRIM.                     -8,55 EUR</div>
+                <div class="ba-line dim">07/09/2026  RID.INAIL NON DOMICILIATA CID12          -18,00 EUR</div>
+              </div>
+            </div>
+            <div class="ba-arrow" aria-hidden="true">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                <defs><linearGradient id="baArrow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#A100FF"/><stop offset="1" stop-color="#F472B6"/></linearGradient></defs>
+                <path d="M4 18 L28 18 M20 10 L28 18 L20 26" stroke="url(#baArrow)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="ba-col ba-after">
+              <div class="ba-label" data-i18n="ba_after_label">Dopo · quello che capisci</div>
+              <div class="ba-content" id="baAfter">
+                <p id="storyText"></p>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="card">
           <h3 class="card-title" data-i18n="scenarios_title">Cosa succederebbe se…</h3>

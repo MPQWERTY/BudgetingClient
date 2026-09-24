@@ -872,6 +872,12 @@ export async function askAdvisor(question, opts = {}) {
 
   const mock = pickMockResponse(question, lang, history);
 
+  // In mock mode: ritorna direttamente la risposta canned, niente callAgent (immune a errori di rete/proxy)
+  if (isMock()) {
+    await new Promise(r => setTimeout(r, 350 + Math.random() * 400));
+    return mock;
+  }
+
   try {
     const { json, text } = await callAgent({
       agent: "advisor-chat",
@@ -884,6 +890,7 @@ export async function askAdvisor(question, opts = {}) {
     if (text) return { answer: text, suggested_lesson: null };
     return mock;
   } catch (e) {
-    return { answer: lang === "en" ? "Sorry, I'm briefly unavailable. Try again in a moment." : "Sono momentaneamente non disponibile. Riprova tra poco.", suggested_lesson: null };
+    console.warn("[askAdvisor] fallito, uso mock:", e);
+    return mock; // preferisci mock (utile) a "non disponibile" (frustrante)
   }
 }

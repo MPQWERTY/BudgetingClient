@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="Landing Budget Storyteller">
+  <defs>
+    <radialGradient id="bgRose" cx="0" cy="0" r="1" gradientTransform="translate(120 120) scale(520)">
+      <stop offset="0" stop-color="#F472B6" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#F472B6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bgLav" cx="0" cy="0" r="1" gradientTransform="translate(1160 620) scale(520)">
+      <stop offset="0" stop-color="#A100FF" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#A100FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hiliteGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#A100FF"/>
+      <stop offset="1" stop-color="#F472B6"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0a0022" flood-opacity="0.08"/>
+    </filter>
+    <style>
+      .body{font-family:Inter,system-ui,sans-serif;fill:#0a0022}
+      .muted{fill:#6b6785}
+      .brand{font-family:Fraunces,'Times New Roman',serif;fill:#0a0022}
+      .chip{font-family:Inter,sans-serif;fill:#0a0022;font-size:14px}
+    </style>
+  </defs>
+
+  <!-- background -->
+  <rect width="1280" height="720" fill="#ffffff"/>
+  <rect width="1280" height="720" fill="url(#bgRose)"/>
+  <rect width="1280" height="720" fill="url(#bgLav)"/>
+
+  <!-- nav -->
+  <g>
+    <circle cx="64" cy="52" r="12" fill="url(#hiliteGrad)"/>
+    <text x="86" y="58" class="brand" font-size="20" font-weight="600">Budget Storyteller</text>
+    <text x="1050" y="58" class="body" font-size="14" fill="#6b6785">IT / EN</text>
+    <circle cx="1200" cy="52" r="18" fill="#A100FF"/>
+    <text x="1200" y="58" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#fff" font-weight="600">GD</text>
+  </g>
+
+  <!-- hero -->
+  <text x="640" y="180" text-anchor="middle" class="brand" font-size="56" font-weight="600">
+    Capisci i tuoi soldi.
+  </text>
+  <text x="640" y="240" text-anchor="middle" class="brand" font-size="56" font-style="italic" font-weight="500" fill="url(#hiliteGrad)">
+    Come mai prima.
+  </text>
+  <text x="640" y="278" text-anchor="middle" class="body" font-size="17" fill="#6b6785">
+    Il tuo advisor educativo: chiedi, carica un estratto conto, impara.
+  </text>
+
+  <!-- chat box -->
+  <g filter="url(#cardShadow)">
+    <rect x="220" y="320" width="840" height="88" rx="44" fill="#ffffff" stroke="#e9e4f3"/>
+    <text x="264" y="371" class="body" font-size="18" fill="#8a86a1">Ask your educational advisor…</text>
+    <circle cx="1004" cy="364" r="30" fill="url(#hiliteGrad)"/>
+    <path d="M994 364 L1014 364 M1006 356 L1014 364 L1006 372" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- prompt chips -->
+  <g transform="translate(220 448)">
+    <g>
+      <rect x="0" y="0" width="230" height="42" rx="21" fill="#ffffff" stroke="#e9e4f3"/>
+      <text x="115" y="27" text-anchor="middle" class="chip">How can I save 100 EUR a month?</text>
+    </g>
+    <g transform="translate(246 0)">
+      <rect x="0" y="0" width="200" height="42" rx="21" fill="#ffffff" stroke="#e9e4f3"/>
+      <text x="100" y="27" text-anchor="middle" class="chip">Explain my last payslip</text>
+    </g>
+    <g transform="translate(462 0)">
+      <rect x="0" y="0" width="180" height="42" rx="21" fill="#ffffff" stroke="#e9e4f3"/>
+      <text x="90" y="27" text-anchor="middle" class="chip">Is my rent too high?</text>
+    </g>
+    <g transform="translate(658 0)">
+      <rect x="0" y="0" width="182" height="42" rx="21" fill="#ffffff" stroke="#e9e4f3"/>
+      <text x="91" y="27" text-anchor="middle" class="chip">Build an emergency fund</text>
+    </g>
+  </g>
+
+  <!-- divider + upload -->
+  <line x1="480" y1="562" x2="800" y2="562" stroke="#e9e4f3"/>
+  <text x="640" y="596" text-anchor="middle" class="body" font-size="14" fill="#8a86a1">Or upload a bank statement</text>
+
+  <g transform="translate(540 618)" filter="url(#cardShadow)">
+    <rect x="0" y="0" width="200" height="52" rx="26" fill="#0a0022"/>
+    <path d="M56 26 L74 26 M65 17 L65 35" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    <text x="120" y="33" class="body" font-size="16" fill="#fff" font-weight="500">Upload a file</text>
+  </g>
+</svg>
