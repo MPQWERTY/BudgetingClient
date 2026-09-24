@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Smoke tests</title>
+<style>
+body{font-family:system-ui;background:#050008;color:#f5f0ff;padding:20px;}
+.pass{color:#4ade80} .fail{color:#f87171}
+pre{background:#1a0530;padding:12px;border-radius:8px;overflow:auto;}
+</style></head>
+<body>
+<h1>Budget Storyteller — smoke tests</h1>
+<p>Aprire con <code>?mock=1</code> per usare risposte mock (no API key richiesta).</p>
+<pre id="log"></pre>
+<script type="module">
+import { extractJson } from "/lib/claude.js";
+import { runOrchestrator } from "/agents/orchestrator.js";
+import { CATEGORY_KEYWORDS, detectLang } from "/lib/i18n.js";
+
+const log = document.getElementById("log");
+let pass = 0, fail = 0;
+function test(name, cond, extra="") {
+  const ok = !!cond;
+  log.innerHTML += `<span class="${ok?'pass':'fail'}">${ok?'✓':'✗'} ${name}</span> ${extra}\n`;
+  ok ? pass++ : fail++;
+}
+async function run() {
+  // 1. extractJson tolerates fences
+  test("extractJson: fenced", JSON.stringify(extractJson("```json\n{\"a\":1}\n```")) === '{"a":1}');
+  test("extractJson: bare", JSON.stringify(extractJson('prefix {"b":2} suffix')) === '{"b":2}');
+  test("extractJson: array", JSON.stringify(extractJson('[1,2,3]')) === '[1,2,3]');
+  test("extractJson: invalid", extractJson("no json here") === null);
+
+  // 2. i18n
+  test("detectLang returns it|en", ["it","en"].includes(detectLang()));
+  test("category keywords have core categories", ["housing","food","transport","utilities","entertainment"].every(k => CATEGORY_KEYWORDS.it[k]));
+
+  // 3. Orchestrator end-to-end con mock (forza mock via query string)
+  if (new URLSearchParams(location.search).get("mock") === "1") {
+    const fakeCsv = `Data;Descrizione;Importo
+01/09/2026;Stipendio;+2400,00
+02/09/2026;Esselunga;-90,00`;
+    const rows = fakeCsv.split("\n").map(l => l.split(";"));
+    const steps = [];
+    const res = await runOrchestrator({
+      fileMeta: { name: "test.csv", type: "csv", size_bytes: fakeCsv.length },
+      fileData: { kind: "csv", raw: fakeCsv, preview: fakeCsv, rows },
+      onStep: (a, s) => steps.push(`${a}:${s}`),
+    });
+    test("orchestrator: status ok", res.status === "ok" || res.status === "partial");
+    test("orchestrator: has parse", !!res.parse);
+    test("orchestrator: has analysis", !!res.analysis);
+    test("orchestrator: has advice", !!res.advice);
+    test("orchestrator: score in [0,100]", res.advice?.score >= 0 && res.advice?.score <= 100);
+    test("orchestrator: step sequence includes parser+analyzer+advisor", steps.some(s=>s.startsWith("parser:")) && steps.some(s=>s.startsWith("advisor:")));
+  } else {
+    log.innerHTML += `\n(skipped orchestrator tests — apri con ?mock=1)\n`;
+  }
+  log.innerHTML += `\n<b>${pass} passati, ${fail} falliti</b>`;
+}
+run();
+</script></body></html>

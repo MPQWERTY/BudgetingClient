@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Budget Storyteller — Hagenthon</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/accenture-brand.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+  <!-- 1. Problema -->
+  <section class="slide active">
+    <div class="slide-header">
+      <div class="brand"><div class="brand-mark">&gt;</div><div class="brand-name">Budget Storyteller</div></div>
+      <div class="slide-num">01 / 05</div>
+    </div>
+    <h3>Il Problema</h3>
+    <h1>Milioni di persone <span class="accent">non capiscono</span><br>i loro estratti conto.</h1>
+    <p>TAEG, spese ricorrenti, categorie confuse. L'educazione finanziaria è inaccessibile, e chi ne ha più bisogno ne rimane escluso.</p>
+    <div class="footer"><span>Hagenthon 2026 · Tema 02 Inclusione Finanziaria</span><span>Accenture</span></div>
+  </section>
+
+  <!-- 2. Soluzione -->
+  <section class="slide">
+    <div class="slide-header">
+      <div class="brand"><div class="brand-mark">&gt;</div><div class="brand-name">Budget Storyteller</div></div>
+      <div class="slide-num">02 / 05</div>
+    </div>
+    <h3>La Soluzione</h3>
+    <h1>Un <span class="accent">racconto agentico</span><br>dei tuoi soldi.</h1>
+    <div class="grid-3" style="margin-top: 30px;">
+      <div class="card"><h4>Carica</h4><p>CSV, PDF o XLSX. Anche il file più confuso.</p></div>
+      <div class="card"><h4>Ascolta</h4><p>5 agenti raccontano dove vanno i soldi, in parole semplici.</p></div>
+      <div class="card"><h4>Impara</h4><p>Micro-lezioni personalizzate sulle tue aree deboli.</p></div>
+    </div>
+    <div class="footer"><span>Educazione, non consulenza.</span><span>02 / 05</span></div>
+  </section>
+
+  <!-- 3. Architettura -->
+  <section class="slide">
+    <div class="slide-header">
+      <div class="brand"><div class="brand-mark">&gt;</div><div class="brand-name">Budget Storyteller</div></div>
+      <div class="slide-num">03 / 05</div>
+    </div>
+    <h3>Architettura Agentica</h3>
+    <h2>5 agenti specializzati, orchestrati.</h2>
+    <div class="grid-2">
+      <div class="arch">FILE ─► ORCHESTRATOR
+         │
+         ├─► PARSER    (estrae transazioni)
+         │      │
+         │      ▼
+         ├─► ANALYZER  (categorizza + narra)
+         │      │
+         │  ┌───┴───┐
+         │  ▼       ▼
+         ├─►SIM   ADVISOR   (paralleli)
+         │      │
+         ▼      ▼
+      STATE  ─► UI DASHBOARD</div>
+      <div>
+        <p><b style="color:var(--text);">Ogni agente</b> ha input/output JSON tipizzato, fallback deterministico, retry + timeout.</p>
+        <p style="margin-top:16px;"><b style="color:var(--text);">Le istruzioni</b> in <code>agents/*.md</code> sono lette dal frontend come system prompt: <b>la spec vale quello che esegue</b>.</p>
+        <div style="margin-top:20px;">
+          <span class="chip">Haiku 4.5</span><span class="chip">Sonnet 5</span><span class="chip">HITL</span><span class="chip">Fallback euristici</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Multi-agent · JSON strict · deterministic fallbacks</span><span>03 / 05</span></div>
+  </section>
+
+  <!-- 4. Demo + Features -->
+  <section class="slide">
+    <div class="slide-header">
+      <div class="brand"><div class="brand-mark">&gt;</div><div class="brand-name">Budget Storyteller</div></div>
+      <div class="slide-num">04 / 05</div>
+    </div>
+    <h3>In Azione</h3>
+    <h2>Dal caos al racconto in 15 secondi.</h2>
+    <div class="grid-3">
+      <div class="card"><h4>Score 0-100</h4><p>5 dimensioni: reddito, spese, risparmio, emergenza, debito.</p></div>
+      <div class="card"><h4>Storia in linguaggio semplice</h4><p>Narrativa generata nella lingua dell'utente (IT/EN auto).</p></div>
+      <div class="card"><h4>Scenari what-if</h4><p>"Se risparmi €50/mese, in 12 mesi…" — solo matematica, mai raccomandazioni.</p></div>
+      <div class="card"><h4>Chat Q&A</h4><p>Chiedi "cos'è TAEG?" → risposta + mini-lezione proposta.</p></div>
+      <div class="card"><h4>Micro-lezioni</h4><p>Difficoltà adattiva, quiz interattivi, tracking progressi.</p></div>
+      <div class="card"><h4>Storico locale</h4><p>Sessioni + score in localStorage, nessun dato in cloud.</p></div>
+    </div>
+    <div class="footer"><span>Roadmap Beta: previsioni, gamification, integrazione bancaria</span><span>04 / 05</span></div>
+  </section>
+
+  <!-- 5. Impatto -->
+  <section class="slide">
+    <div class="slide-header">
+      <div class="brand"><div class="brand-mark">&gt;</div><div class="brand-name">Budget Storyteller</div></div>
+      <div class="slide-num">05 / 05</div>
+    </div>
+    <h3>Impatto</h3>
+    <div class="grid-2">
+      <div>
+        <div class="big-num">+40%</div>
+        <p style="margin-top:12px;">di comprensione dei termini finanziari dopo 3 mini-lezioni (target).</p>
+      </div>
+      <div>
+        <h2>Perché funziona</h2>
+        <ul>
+          <li>Non è un chatbot: è un sistema con 5 agenti orchestrati.</li>
+          <li>Educazione + comprensione, mai consigli di investimento.</li>
+          <li>Robustezza built-in: ogni LLM ha un fallback deterministico.</li>
+          <li>Trasparenza: le istruzioni degli agenti sono anche il codice che gira.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>Team Accenture · Hagenthon 2026 · 5h</span><span>05 / 05</span></div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev">‹ Prev</button>
+  <button id="next">Next ›</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll(".slide");
+let idx = 0;
+function go(n) {
+  idx = Math.max(0, Math.min(slides.length - 1, n));
+  slides.forEach((s, i) => s.classList.toggle("active", i === idx));
+  document.getElementById("progress").style.width = `${((idx + 1) / slides.length) * 100}%`;
+}
+document.getElementById("prev").onclick = () => go(idx - 1);
+document.getElementById("next").onclick = () => go(idx + 1);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") go(idx + 1);
+  if (e.key === "ArrowLeft" || e.key === "PageUp") go(idx - 1);
+  if (e.key === "Home") go(0); if (e.key === "End") go(slides.length - 1);
+});
+go(0);
+</script>
+</body></html>

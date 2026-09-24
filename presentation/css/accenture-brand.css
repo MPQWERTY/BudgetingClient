@@ -1,0 +1,52 @@
+/* Accenture brand — presentation deck */
+:root {
+  --purple: #A100FF;
+  --purple-light: #BE82FF;
+  --purple-glow: rgba(161, 0, 255, 0.4);
+  --bg: #050008;
+  --bg-elev: #120021;
+  --card: #1a0530;
+  --text: #f5f0ff;
+  --text-dim: #b8a8cc;
+  --border: rgba(190, 130, 255, 0.2);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-family: "Inter", system-ui, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+body { background:
+  radial-gradient(ellipse 900px 500px at 20% 0%, rgba(161,0,255,0.2), transparent 60%),
+  radial-gradient(ellipse 700px 400px at 80% 100%, rgba(190,130,255,0.12), transparent 60%),
+  var(--bg);
+}
+.deck { position: relative; height: 100vh; width: 100vw; overflow: hidden; }
+.slide {
+  position: absolute; inset: 0;
+  display: none; flex-direction: column; justify-content: center; padding: 6vh 8vw;
+  opacity: 0; transition: opacity 0.35s ease;
+}
+.slide.active { display: flex; opacity: 1; }
+.slide-header { display: flex; justify-content: space-between; align-items: center; position: absolute; top: 3vh; left: 8vw; right: 8vw; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-mark { width: 40px; height: 40px; background: var(--purple); border-radius: 8px; display: grid; place-items: center; font-weight: 700; font-size: 22px; box-shadow: 0 0 30px var(--purple-glow); }
+.brand-name { font-weight: 600; letter-spacing: -0.01em; }
+.slide-num { color: var(--text-dim); font-size: 14px; font-variant-numeric: tabular-nums; }
+
+h1 { font-size: 4.5vw; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 24px; }
+h1 span.accent { color: var(--purple-light); }
+h2 { font-size: 2.6vw; font-weight: 600; margin-bottom: 20px; }
+h3 { font-size: 1.4vw; font-weight: 500; color: var(--purple-light); margin-bottom: 12px; letter-spacing: 0.02em; text-transform: uppercase; }
+p, li { font-size: 1.4vw; line-height: 1.5; color: var(--text-dim); }
+ul { margin-left: 1.2em; }
+li { margin-bottom: 10px; }
+.big-num { font-size: 8vw; font-weight: 700; color: var(--purple-light); text-shadow: 0 0 40px var(--purple-glow); line-height: 1; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+.card h4 { font-size: 1.2vw; font-weight: 600; margin-bottom: 8px; }
+.card p { font-size: 1.05vw; }
+.arch { font-family: "SF Mono", "Courier New", monospace; font-size: 1vw; color: var(--purple-light); background: var(--bg-elev); padding: 24px; border-radius: 12px; white-space: pre; border: 1px solid var(--border); }
+.chip { display: inline-block; padding: 4px 12px; background: var(--bg-elev); border: 1px solid var(--border); border-radius: 20px; font-size: 1vw; margin-right: 8px; color: var(--purple-light); }
+.footer { position: absolute; bottom: 3vh; left: 8vw; right: 8vw; display: flex; justify-content: space-between; color: var(--text-dim); font-size: 12px; }
+.nav { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 8px; z-index: 10; }
+.nav button { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 14px; border-radius: 8px; cursor: pointer; font-family: inherit; }
+.nav button:hover { border-color: var(--purple); }
+.progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--purple); transition: width 0.3s; z-index: 10; }

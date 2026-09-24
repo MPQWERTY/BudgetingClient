@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Budget Storyteller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">&gt;</div>
+      <div>
+        <div class="brand-title" data-i18n="app_title">Budget Storyteller</div>
+        <div class="brand-sub" data-i18n="tagline">Capisci i tuoi soldi. In parole semplici.</div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <select id="langSelect" title="lingua">
+        <option value="it">IT</option>
+        <option value="en">EN</option>
+      </select>
+      <button id="btnReload" class="ghost" data-i18n="reload">Ricomincia</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Upload -->
+    <section id="secUpload" class="card">
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="fileInput" accept=".csv,.tsv,.pdf,.xlsx,.xls" hidden />
+        <div class="drop-inner">
+          <div class="drop-icon">↑</div>
+          <div class="drop-text" data-i18n="upload_hint">Trascina qui il tuo estratto conto (CSV, PDF, XLSX) o clicca per selezionare</div>
+          <button id="btnSample" class="link" data-i18n="try_sample">Prova con il file di esempio</button>
+        </div>
+      </div>
+      <div id="hitlBanner" class="banner hidden">
+        <span data-i18n="hitl_banner">La qualità del parsing è bassa. Verifica il file e conferma per procedere.</span>
+        <button id="btnConfirmHitl" data-i18n="confirm">Conferma</button>
+      </div>
+    </section>
+
+    <!-- 2. Live agents -->
+    <section id="secAgents" class="card hidden">
+      <h2 data-i18n="agents_working">Gli agenti stanno lavorando</h2>
+      <div class="agents-grid">
+        <div class="agent" data-agent="parser"><span class="dot"></span><span class="name" data-i18n="parser">Parser</span><span class="state">—</span></div>
+        <div class="agent" data-agent="analyzer"><span class="dot"></span><span class="name" data-i18n="analyzer">Analista</span><span class="state">—</span></div>
+        <div class="agent" data-agent="simulator"><span class="dot"></span><span class="name" data-i18n="simulator">Simulatore</span><span class="state">—</span></div>
+        <div class="agent" data-agent="advisor"><span class="dot"></span><span class="name" data-i18n="advisor">Consulente educativo</span><span class="state">—</span></div>
+      </div>
+    </section>
+
+    <!-- 3. Dashboard -->
+    <section id="secDashboard" class="grid hidden">
+      <div class="card score-card">
+        <h3 data-i18n="score_title">Punteggio di salute finanziaria</h3>
+        <div class="score-value" id="scoreValue">—</div>
+        <div class="score-interp" id="scoreInterp"></div>
+        <div class="breakdown" id="scoreBreakdown"></div>
+      </div>
+      <div class="card">
+        <h3 data-i18n="categories_title">Dove vanno i tuoi soldi</h3>
+        <div class="pie-wrap"><canvas id="pieCanvas" width="220" height="220"></canvas></div>
+        <div class="legend" id="pieLegend"></div>
+      </div>
+      <div class="card story-card">
+        <h3 data-i18n="story_title">La tua storia</h3>
+        <p id="storyText"></p>
+      </div>
+      <div class="card">
+        <h3 data-i18n="scenarios_title">Cosa succederebbe se…</h3>
+        <div id="scenariosList"></div>
+      </div>
+      <div class="card lessons-card">
+        <h3 data-i18n="lessons_title">Micro-lezioni per te</h3>
+        <div id="lessonsList"></div>
+      </div>
+      <div class="card chat-card">
+        <h3 data-i18n="chat_title">Chiedi qualsiasi cosa</h3>
+        <div id="chatLog" class="chat-log"></div>
+        <form id="chatForm" class="chat-input">
+          <input id="chatInput" type="text" placeholder="Es. Cosa significa TAEG?" data-i18n-attr="placeholder,chat_placeholder" />
+          <button type="submit" data-i18n="ask">Chiedi</button>
+        </form>
+      </div>
+      <div class="card history-card">
+        <h3 data-i18n="history_title">Storico analisi</h3>
+        <table id="historyTable"><thead><tr><th>Data</th><th>File</th><th>Score</th><th>Righe</th></tr></thead><tbody></tbody></table>
+      </div>
+    </section>
+
+    <footer class="disclaimer" data-i18n="disclaimer">Contenuto educativo. Non è consulenza finanziaria personalizzata.</footer>
+  </main>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
