@@ -57,9 +57,9 @@ class Handler(SimpleHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self):
-        # Espone /agents/*.md dal repo (system prompt = file istruzioni).
-        # Gli .js sotto /agents/ restano serviti dalla static folder.
         path_no_qs = self.path.split("?", 1)[0]
+
+        # /agents/*.md
         if path_no_qs.startswith("/agents/") and path_no_qs.endswith(".md"):
             rel = path_no_qs.lstrip("/")
             target = ROOT.parent / rel
@@ -73,6 +73,28 @@ class Handler(SimpleHTTPRequestHandler):
                 return
             self._json(404, {"error": "not found"})
             return
+
+        # /presentation/* -> serve dal repo root
+        if path_no_qs.startswith("/presentation/") or path_no_qs == "/presentation":
+            rel = path_no_qs.lstrip("/") or "presentation/"
+            if rel.endswith("/"):
+                rel += "index.html"
+            target = ROOT.parent / rel
+            if target.is_file():
+                ext = "." + target.name.rsplit(".", 1)[-1].lower()
+                mime = {".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8",
+                        ".js": "text/javascript; charset=utf-8", ".svg": "image/svg+xml",
+                        ".png": "image/png", ".jpg": "image/jpeg", ".md": "text/markdown; charset=utf-8"}.get(ext, "application/octet-stream")
+                self.send_response(200)
+                self.send_header("Content-Type", mime)
+                data = target.read_bytes()
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+                return
+            self._json(404, {"error": "presentation file not found"})
+            return
+
         return super().do_GET()
 
     def do_POST(self):
